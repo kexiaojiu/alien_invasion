@@ -1,11 +1,11 @@
-#coding=gbk
+#coding=utf-8
 import sys
 import pygame
 from settings import Settings
 from ship import Ship
 
 def run_game():
-    """³õÊ¼»¯ÓÎÏ·²¢´´½¨Ò»¸öÆÁÄ»¶ÔÏó"""
+    """åˆå§‹åŒ–æ¸¸æˆå¹¶åˆ›å»ºä¸€ä¸ªå±å¹•å¯¹è±¡"""
     pygame.init()
     
     ai_settings = Settings()
@@ -13,25 +13,25 @@ def run_game():
         (ai_settings.screen_width, ai_settings.screen_height))
     pygame.display.set_caption("Alien Invasion")
     
-    """ÉèÖÃ±³¾°ÑÕÉ«"""
+    """è®¾ç½®èƒŒæ™¯é¢œè‰²"""
     bg_color = (230,230,230)
     
-    """´´½¨Ò»Ö»·É´¬"""
+    """åˆ›å»ºä¸€åªé£èˆ¹"""
     ship = Ship(screen)
     
-    """¿ªÊ¼ÓÎÏ·µÄÖ÷Ñ­»·"""
+    """å¼€å§‹æ¸¸æˆçš„ä¸»å¾ªç¯"""
     while True:
         
-        # ¼àÊÓ¼üÅÌºÍÊó±êÊÂ¼ş
+        # ç›‘è§†é”®ç›˜å’Œé¼ æ ‡äº‹ä»¶
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
         
-        # Ã¿´ÎÑ­»·Ê±ºò¶¼ÖØ»æÆÁÄ»
+        # æ¯æ¬¡å¾ªç¯æ—¶å€™éƒ½é‡ç»˜å±å¹•
         screen.fill(ai_settings.bg_color)        
         ship.blitme()
                 
-        # ÈÃ×î½ü»æÖÆµÄÆÁÄ»¿É¼û
+        # è®©æœ€è¿‘ç»˜åˆ¶çš„å±å¹•å¯è§
         pygame.display.flip()
 
 run_game()

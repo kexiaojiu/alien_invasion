@@ -1,20 +1,20 @@
-#coding=gbk
+#coding=utf-8
 import pygame
 
 class Ship():
     def __init__(self, screen):
-        """³õÊ¼»¯·É´¬²¢ÉèÖÃÆä³õÊ¼Î»ÖÃ"""
+        """åˆå§‹åŒ–é£èˆ¹å¹¶è®¾ç½®å…¶åˆå§‹ä½ç½®"""
         self.screen = screen
         
-        # ¼ÓÔØ·É´¬Í¼Ïñ²¢»ñÈ¡ÆäÍâ½Ó¾ØĞÎ"""
+        # åŠ è½½é£èˆ¹å›¾åƒå¹¶è·å–å…¶å¤–æ¥çŸ©å½¢"""
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         
-        # ½«Ã¿ËÒ·É´¬·ÅÔÚÆÁÄ»ÖĞÑëµ×²¿
+        # å°†æ¯è‰˜é£èˆ¹æ”¾åœ¨å±å¹•ä¸­å¤®åº•éƒ¨
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
         
     def blitme(self):
-        """ÔÚÖÆ¶¨Î»ÖÃ»æÖÆ·É´¬"""
+        """åœ¨åˆ¶å®šä½ç½®ç»˜åˆ¶é£èˆ¹"""
         self.screen.blit(self.image, self.rect)
