@@ -14,12 +14,15 @@ def run_game():
     pygame.display.set_caption("Alien Invasion")
     
     """创建一只飞船"""
-    ship = Ship(screen)
+    ship = Ship(ai_settings, screen)
     
     """开始游戏的主循环"""
     while True:
         # 监视键盘和鼠标事件
-        gf.check_events()
+        gf.check_events(ship)
+        
+        # 更新飞船位置
+        ship.update()
         
         # 更新屏幕的图像，并切换到新屏幕
         gf.update_screen(ai_settings, screen, ship)
