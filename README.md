@@ -19,6 +19,10 @@
    文件ship.py包含Ship类，该类包含__init__()、管理飞船位置的方法update()以及在屏幕绘制飞船的方法blitme()。表示飞船的图像在images文件夹下ship.bmp中。
    
 **bullet.py**
-  文件bullet.py保护Bullet类，父类为pygame.Sprite。通过使用Sprite类，可以将游戏中相关的元素编组，进而同时操作编组中的元素。该类包含__init__()、向上移动子弹发方法update()以及在屏幕绘制子弹的方法draw_bullet()。
+  文件bullet.py包含Bullet类，父类为pygame.Sprite。通过使用Sprite类，可以将游戏中相关的元素编组，进而同时操作编组中的元素。该类包含__init__()、向上移动子弹发方法update()以及在屏幕绘制子弹的方法draw_bullet()。
+  
+**alien.py**
+  文件alien.py包含Alien类，父类为pygame.Sprite。  
+  
 ## 其他
   需要安装python、Pygame(https://bitbucket.org/pygame/pygame/downloads/)
