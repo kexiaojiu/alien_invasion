@@ -5,18 +5,20 @@
 
 ## 文件说明
 **alien_invasion.py**
-  主文件alien_invasion.py创建一系列游戏需要的对象：存储在ai_settings中的设置、存储在screen中的主显示surface以及一个飞船实例。
-  文件中还包含游戏的主循环，该循环调用check_events()、ship.update()、upadate_screen()。
+  主文件alien_invasion.py创建一系列游戏需要的对象：存储在ai_settings中的设置、存储在screen中的主显示surface、一个飞船实例ship和一个用于存储子弹的编组bullets。
+  文件中还包含游戏的主循环，该循环调用check_events()、ship.update()、update_bullets()、upadate_screen()。
   运行该文件就可以玩《外星人入侵》，其他文件都会被直接或者间接导入其中。
 
 **settings.py**
   文件settings.py包含Settings类，该类只有__init__()，用于初始化控制游戏外观和飞船速度。
   
 **game_functions.py**
-  文件game_functions.py包含一系列游戏相关函数。check_events()检测相关事件，如按键和松开，并使用辅助函数check_keydown_events()和check_keyup_events()来处理这些事件。此外，update_screen()在每次主循环中重绘屏幕。
+  文件game_functions.py包含一系列游戏相关函数。check_events()检测相关事件，如按键和松开，并使用辅助函数check_keydown_events()、check_keyup_events()、update_bullets()等来处理这些事件。此外，update_screen()在每次主循环中重绘屏幕。
 
 **ship.py**
    文件ship.py包含Ship类，该类包含__init__()、管理飞船位置的方法update()以及在屏幕绘制飞船的方法blitme()。表示飞船的图像在images文件夹下ship.bmp中。
-
+   
+**bullet.py**
+  文件bullet.py保护Bullet类，父类为pygame.Sprite。通过使用Sprite类，可以将游戏中相关的元素编组，进而同时操作编组中的元素。该类包含__init__()、向上移动子弹发方法update()以及在屏幕绘制子弹的方法draw_bullet()。
 ## 其他
   需要安装python、Pygame(https://bitbucket.org/pygame/pygame/downloads/)
