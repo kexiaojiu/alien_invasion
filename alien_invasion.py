@@ -32,7 +32,8 @@ def run_game():
         ship.update()
         
         # 更新子弹位置，删除已经消失的子弹
-        gf.update_bullets(bullets)
+        # 击中外星人时，子弹和飞船一起消失，如果外星人都被消灭，重新创建外星人舰队
+        gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
         
         # 更新外星人位置
         gf.update_aliens(ai_settings, aliens)
