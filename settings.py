@@ -15,8 +15,8 @@ class Settings():
         
         # 子弹设置
         self.bullet_speed_factor = 5
-        self.bullet_width = 3
-        self.bullet_height = 15
+        #self.bullet_width = 3
+        #self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
         # 限制未消失的子弹数目
         self.bullets_allowed = 9
