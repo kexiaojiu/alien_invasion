@@ -73,8 +73,8 @@ def fire_bullet(ai_settings, screen, ship, bullets):
         # 创建一个子弹，并将子弹加入到编组bullets中
         net_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(net_bullet)
-
-
+        
+    
 def get_number_aliens_x(ai_settings, alien_width):
     """计算每行可以容纳多少外星人"""
     available_space_x = ai_settings.screen_width - 2 * alien_width
@@ -112,3 +112,24 @@ def create_fleet(ai_settings, screen, ship, aliens):
             # 创建一个外星人并把它加入当前行
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
+
+def check_fleet_edges(ai_settings, aliens):
+    """有外星人到达屏幕便宜时采取相应措施"""
+    for alien in aliens:
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+
+def change_fleet_direction(ai_settings, aliens):
+    """将外星人下移并改变他们的方向"""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
+
+
+def update_aliens(ai_settings, aliens):
+    """更新外星人位置"""
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
+    

@@ -28,6 +28,18 @@ class Alien(Sprite):
         self.screen.blit(self.image, self.rect)
         
         
-    #def update(self):
+    def update(self):
         """调整外星人位置"""
-            
+        self.x += (self.ai_settings.alien_speed_factor *
+                    self.ai_settings.fleet_direction)
+        self.rect.x = self.x
+    
+    def check_edges(self):
+        """检查外星人是否位于边缘，是则返回True"""
+        screen_rect = self.screen.get_rect()
+        if self.rect.right >= screen_rect.right:
+            return True
+        elif self.rect.left <= 0:
+            return True
+        else:
+            return False
