@@ -40,24 +40,6 @@ def check_events(ai_settings, screen, ship, bullets):
             check_key_up_events(event, ship)
 
 
-def update_screen(ai_settings, screen, ship, bullets, aliens):
-    """更新屏幕的图像，并切换到新屏幕"""    
-    # 每次循环时候都重绘屏幕
-    screen.fill(ai_settings.bg_color)
-    # 在飞船和外星人后面重绘所有的子弹
-    for bullet in bullets.sprites():
-        bullet.draw_bullet()        
-    ship.blitme()
-    for alien in aliens:
-        alien.blitme()
-    aliens.draw(screen)
-    #~ for alien in aliens.sprites():
-        #~ alien.blitme()
-                
-    # 让最近绘制的屏幕可见
-    pygame.display.flip()
-
-
 def update_bullets(ai_settings, screen, ship, aliens, bullets):
     """更新子弹位置，删除已经消失的子弹"""
     # 更新子弹位置
@@ -143,8 +125,29 @@ def change_fleet_direction(ai_settings, aliens):
     ai_settings.fleet_direction *= -1
 
 
-def update_aliens(ai_settings, aliens):
-    """更新外星人位置"""
+def update_aliens(ai_settings, ship, aliens):
+    """检查是否有外星人到达屏幕边缘，然后更新外星人位置"""
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
     
+    # 检查外星人和飞船之间的碰撞
+    if pygame.sprite.spritecollideany(ship, aliens):
+        print("Tese:Ship hit!!!")
+
+
+def update_screen(ai_settings, screen, ship, bullets, aliens):
+    """更新屏幕的图像，并切换到新屏幕"""    
+    # 每次循环时候都重绘屏幕
+    screen.fill(ai_settings.bg_color)
+    # 在飞船和外星人后面重绘所有的子弹
+    for bullet in bullets.sprites():
+        bullet.draw_bullet()        
+    ship.blitme()
+    for alien in aliens:
+        alien.blitme()
+    aliens.draw(screen)
+    #~ for alien in aliens.sprites():
+        #~ alien.blitme()
+                
+    # 让最近绘制的屏幕可见
+    pygame.display.flip()    

@@ -36,7 +36,7 @@ def run_game():
         gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
         
         # 更新外星人位置
-        gf.update_aliens(ai_settings, aliens)
+        gf.update_aliens(ai_settings, ship, aliens)
         
         # 更新屏幕的图像，并切换到新屏幕
         gf.update_screen(ai_settings, screen, ship, bullets, aliens)
