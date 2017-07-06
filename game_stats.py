@@ -1,12 +1,13 @@
 #coding=utf-8
 class GameStats():
-    """跟踪邮箱的统计信息"""
+    """跟踪游戏的统计信息"""
     
     def __init__(self, ai_settings):
         """初始化统计信息"""
         self.ai_settings = ai_settings
-        self.game_active = True
         self.rest_stats()
+        # 让游戏一开始处于非激活状态
+        self.game_active = False
         
     def rest_stats(self):
         """初始化在游戏运行期间可能变化的信息"""

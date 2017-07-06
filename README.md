@@ -27,5 +27,8 @@
 **game_stats.py**
   文件game_stats.py包含Game_stats类，跟踪游戏统计信息。
   
+**button.py**
+  文件button.py包含Button类，用于开始游戏按钮
+  
 ## 其他
   需要安装python、Pygame(https://bitbucket.org/pygame/pygame/downloads/)
