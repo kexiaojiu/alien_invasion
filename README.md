@@ -22,7 +22,10 @@
   文件bullet.py包含Bullet类，父类为pygame.Sprite。通过使用Sprite类，可以将游戏中相关的元素编组，进而同时操作编组中的元素。该类包含__init__()、向上移动子弹发方法update()以及在屏幕绘制子弹的方法draw_bullet()。
   
 **alien.py**
-  文件alien.py包含Alien类，父类为pygame.Sprite。  
+  文件alien.py包含Alien类，父类为pygame.Sprite。
+  
+**game_stats.py**
+  文件game_stats.py包含Game_stats类，跟踪游戏统计信息。
   
 ## 其他
   需要安装python、Pygame(https://bitbucket.org/pygame/pygame/downloads/)
