@@ -30,5 +30,8 @@
 **button.py**
   文件button.py包含Button类，用于开始游戏按钮。
   
+**scoreboard.py**
+  文件包含Scoreboard类，用于统计得分。
+  
 ## 其他
   需要安装python、Pygame(https://bitbucket.org/pygame/pygame/downloads/)

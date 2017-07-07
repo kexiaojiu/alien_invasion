@@ -83,7 +83,15 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens,
                             aliens, bullets, mouse_x, mouse_y)    
 
 
-def update_bullets(ai_settings, screen, ship, aliens, bullets):
+def check_high_score(stats, score):
+    """检查是否诞生了最高分"""
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        score.prep_high_score()
+ 
+
+
+def update_bullets(ai_settings, screen, stats, ship, aliens, bullets, score):
     """更新子弹位置，删除已经消失的子弹"""
     # 更新子弹位置
     bullets.update()
@@ -93,12 +101,22 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
             
-    check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
+    check_bullet_alien_collisions(ai_settings, screen, stats, ship, aliens, 
+                                bullets, score)
     
 
-def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):    
+def check_bullet_alien_collisions(ai_settings, screen, stats, ship, aliens, 
+                                bullets, score):    
     # 检查是否有子弹击中外星人，如果有，就删除对应的子弹和外星人
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    
+    # 每杀死一个外星人，加分
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += ai_settings.alien_points * len(aliens)
+            score.prep_score()
+        # 检查是否超过最高分    
+        check_high_score(stats, score)    
     
     if len(aliens) == 0:
         # 删除现有的子弹，加快游戏节奏，并且新建一群外星人
@@ -219,7 +237,7 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
     
     
 def update_screen(ai_settings, screen, stats, ship, aliens, bullets, 
-                play_button):
+                play_button, score):
     """更新屏幕的图像，并切换到新屏幕"""    
     # 每次循环时候都重绘屏幕
     screen.fill(ai_settings.bg_color)
@@ -230,6 +248,9 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets,
     for alien in aliens:
         alien.blitme()
     aliens.draw(screen)
+    # 显示得分
+    score.show_score()
+    
     #~ for alien in aliens.sprites():
         #~ alien.blitme()
     # 如果游戏处于非激活状态，就绘制play按钮    

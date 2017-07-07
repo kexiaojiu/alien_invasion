@@ -8,7 +8,11 @@ class GameStats():
         self.rest_stats()
         # 让游戏一开始处于非激活状态
         self.game_active = False
+        # 任何情况都不应该重置最高分
+        self.high_score = 0
+        
         
     def rest_stats(self):
         """初始化在游戏运行期间可能变化的信息"""
         self.ship_left = self.ai_settings.ship_limit
+        self.score = 0
