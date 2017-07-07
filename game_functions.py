@@ -35,7 +35,8 @@ def check_key_up_events(event, ship):
         ship.moving_left = False
  
     
-def start_game(ai_settings, screen, stats, play_button, ship, aliens, bullets):
+def start_game(ai_settings, screen, stats, score, play_button, ship, aliens, 
+               bullets):
     """开始游戏"""
     if not stats.game_active:
         # 重置游戏设置
@@ -48,6 +49,11 @@ def start_game(ai_settings, screen, stats, play_button, ship, aliens, bullets):
         stats.rest_stats()
         stats.game_active = True
         
+        # 重置记分牌图像
+        score.prep_score()
+        score.prep_high_score()
+        score.prep_level()
+        
         # 清空外星人和子弹列表
         aliens.empty()
         bullets.empty()
@@ -57,16 +63,16 @@ def start_game(ai_settings, screen, stats, play_button, ship, aliens, bullets):
         ship.center_ship()
 
 
-def check_play_button(ai_settings, screen, stats, play_button, ship, aliens,
-                    bullets, mouse_x, mouse_y): 
+def check_play_button(ai_settings, screen, stats, score, play_button, ship, 
+                    aliens, bullets, mouse_x, mouse_y): 
     """在玩家点击Play按钮时候开始游戏"""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked:
-        start_game(ai_settings, screen, stats, play_button, ship, aliens, 
+        start_game(ai_settings, screen, stats, score, play_button, ship, aliens, 
                 bullets)
         
 
-def check_events(ai_settings, screen, stats, play_button, ship, aliens, 
+def check_events(ai_settings, screen, stats,score, play_button, ship, aliens, 
                 bullets):
     """监视键盘和鼠标事件"""
     for event in pygame.event.get():
@@ -79,8 +85,8 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens,
             check_key_up_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings, screen, stats, play_button, ship, 
-                            aliens, bullets, mouse_x, mouse_y)    
+            check_play_button(ai_settings, screen, stats, score, play_button, 
+                            ship, aliens, bullets, mouse_x, mouse_y)    
 
 
 def check_high_score(stats, score):
@@ -119,9 +125,11 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, ship, aliens,
         check_high_score(stats, score)    
     
     if len(aliens) == 0:
-        # 删除现有的子弹，加快游戏节奏，并且新建一群外星人
+        # 删除现有的子弹，增加一个等级，加快游戏节奏，并且新建一群外星人
         bullets.empty()
         ai_settings.increase_speed()
+        stats.level += 1
+        score.prep_level()
         create_fleet(ai_settings, screen, ship, aliens)
         
     

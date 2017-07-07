@@ -10,6 +10,8 @@ class GameStats():
         self.game_active = False
         # 任何情况都不应该重置最高分
         self.high_score = 0
+        # 用户等级
+        self.level = 1
         
         
     def rest_stats(self):

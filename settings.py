@@ -19,7 +19,7 @@ class Settings():
         self.bullets_allowed = 9
         
         # 外星人速度设置
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 100
         
         # 以什么样的速度加快游戏的节奏
         self.speedup_scale = 1.2
