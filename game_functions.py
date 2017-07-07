@@ -38,6 +38,9 @@ def check_key_up_events(event, ship):
 def start_game(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     """开始游戏"""
     if not stats.game_active:
+        # 重置游戏设置
+        ai_settings.initialize_dynamic_settings()
+        
         # 隐藏鼠标
         pygame.mouse.set_visible(False)
         
@@ -98,8 +101,9 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     
     if len(aliens) == 0:
-        # 删除现有的子弹，并且新建一群外星人
+        # 删除现有的子弹，加快游戏节奏，并且新建一群外星人
         bullets.empty()
+        ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
         
     
