@@ -8,11 +8,17 @@ class GameStats():
         self.rest_stats()
         # 让游戏一开始处于非激活状态
         self.game_active = False
-        # 任何情况都不应该重置最高分
-        self.high_score = 0
+
         # 用户等级
         self.level = 1
-        
+        # 存储最高分文件名
+        self.store_high_score_file_name = 'data/high_score.txt'
+        # 获取历史最高分
+        try:
+            with open(self.store_high_score_file_name) as f_obj:
+                self.high_score = int(f_obj.read().strip())
+        except FileNotFoundError:
+            self.high_score = 0
         
     def rest_stats(self):
         """初始化在游戏运行期间可能变化的信息"""

@@ -23,8 +23,15 @@ def check_key_down_events(event,ai_settings, screen, stats, play_button, ship,
                 bullets)    
     elif event.key == pygame.K_q:
         #按键q退出游戏
+        save_high_score(stats)
         sys.exit()
 
+def save_high_score(stats):
+    """保存最高分到high_score.txt"""
+    file_name = stats.store_high_score_file_name
+    high_score_str = str(stats.high_score)
+    with open(file_name, 'w') as f_obj:
+        f_obj.write(high_score_str)
 
 def check_key_up_events(event, ship):
     if event.key == pygame.K_RIGHT:
