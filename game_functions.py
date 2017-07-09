@@ -86,6 +86,7 @@ def check_events(ai_settings, screen, stats,score, play_button, ship, aliens,
     """监视键盘和鼠标事件"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            save_high_score(stats)
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             check_key_down_events(event,ai_settings, screen, stats, play_button, 
@@ -132,7 +133,11 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, ship, aliens,
             score.prep_score()
         # 检查是否超过最高分    
         check_high_score(stats, score)    
+    # 升级
+    start_new_level(ai_settings, screen, stats, ship, aliens, bullets, score)
     
+    
+def start_new_level(ai_settings, screen, stats, ship, aliens, bullets, score):    
     if len(aliens) == 0:
         # 删除现有的子弹，增加一个等级，加快游戏节奏，并且新建一群外星人
         bullets.empty()
