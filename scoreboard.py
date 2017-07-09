@@ -1,5 +1,7 @@
 #coding=utf-8
 import pygame.font
+from pygame.sprite import Group
+from ship import Ship
 
 class Scoreboard():
     """显示得分信息的类"""
@@ -11,7 +13,7 @@ class Scoreboard():
         self.ai_settings = ai_settings
         self.stats = stats
         
-        # 显示得分细腻些时候使用的字体
+        # 显示得分信息时候使用的字体
         self.text_color =(30, 30, 30)
         self.font = pygame.font.SysFont(None, 30)
         
@@ -19,6 +21,7 @@ class Scoreboard():
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
+        self.prep_ships()
        
         
     def prep_score(self):
@@ -64,9 +67,35 @@ class Scoreboard():
         self.level_rect.right = self.score_rect.right
         self.level_rect.top =  self.score_rect.top + 25
         
+    def prep_ships(self):
+        """显示还剩余多少飞船"""
+        self.ships = Group()
+        for ship_number in range(self.stats.ship_left):
+            ship = Ship(self.ai_settings, self.screen)
+            ship.rect.x = 30 + ship_number * ship.rect.width
+            ship.rect.y = 10
+            self.ships.add(ship)
+        
+
+        """"显示剩余飞船数目"""
+        ship_left_str = str(self.stats.ship_left)
+        self.ship_left_image = self.font.render(ship_left_str, True, 
+                                                self.text_color,
+                                                self.ai_settings.bg_color)
+                                                
+        # 将剩余飞船数目放在屏幕左上方
+        self.ship_left_rect = self.ship_left_image.get_rect()
+        self.ship_left_rect.left = self.screen_rect.left + 20
+        self.ship_left_rect.top = 30
+        
+        
         
     def show_score(self):
         # 在屏幕显示得分和最高分、等级
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
+        # 绘制剩余飞船
+        self.ships.draw(self.screen)
+        # 在屏幕显示剩余飞船数目
+        self.screen.blit(self.ship_left_image, self.ship_left_rect)

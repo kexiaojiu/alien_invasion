@@ -50,7 +50,7 @@ def run_game():
                             score)
             
             # 更新外星人位置
-            gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
+            gf.update_aliens(ai_settings, stats, score, screen, ship, aliens, bullets)
         
         
         # 更新屏幕的图像，并切换到新屏幕

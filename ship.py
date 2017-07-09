@@ -1,9 +1,11 @@
 #coding=utf-8
 import pygame
+from pygame.sprite import Sprite  
 
-class Ship():
+class Ship(Sprite):
     def __init__(self, ai_settings, screen):
         """初始化飞船并设置其初始位置"""
+        super().__init__()
         self.screen = screen
         self.ai_settings = ai_settings
         
@@ -23,9 +25,15 @@ class Ship():
         # 在飞船属性center中存储小数值
         self.center = float(self.rect.centerx)
         
+        # 显示剩余飞船数目使用的字体
+        self.text_color =(30, 30, 30)
+        self.font = pygame.font.SysFont(None, 30)
+    
+        
     def blitme(self):
         """在制定位置绘制飞船"""
         self.screen.blit(self.image, self.rect)
+    
     
     def update(self):
         """根据移动标记调整飞船位置"""
@@ -37,6 +45,7 @@ class Ship():
         # 根据self.center更新rect对象
         self.rect.centerx = self.center
      
+     
     def center_ship(self):
         """让飞船在屏幕上居中显示"""
-        self.center = self.screen_rect.centerx    
+        self.center = self.screen_rect.centerx  

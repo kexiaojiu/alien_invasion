@@ -53,6 +53,8 @@ def start_game(ai_settings, screen, stats, score, play_button, ship, aliens,
         score.prep_score()
         score.prep_high_score()
         score.prep_level()
+        # 重置剩余飞船数目信息
+        score.prep_ships()
         
         # 清空外星人和子弹列表
         aliens.empty()
@@ -195,35 +197,38 @@ def change_fleet_direction(ai_settings, aliens):
     ai_settings.fleet_direction *= -1
 
 
-def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_settings, stats, score, screen, ship, aliens, bullets):
     """检查是否有外星人到达屏幕边缘，然后更新外星人位置"""
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
     
     # 检查外星人和飞船之间的碰撞
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, stats, score, screen, ship, aliens, bullets)
     
     # 检查是否有外星人到达屏幕底部    
-    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(ai_settings, stats, score, screen, ship, aliens, bullets)
 
 
-def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+def check_aliens_bottom(ai_settings, stats, score, screen, ship, aliens, bullets):
     """检查是否有外星人到达屏幕底部"""
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             # 与飞船被撞相同处理
-            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            ship_hit(ai_settings, stats, score, screen, ship, aliens, bullets)
             break
 
 
-def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+def ship_hit(ai_settings, stats, score, screen, ship, aliens, bullets):
     """相应外星人撞到飞船"""
     
     if stats.ship_left > 0:
         # 将ship_left减一
         stats.ship_left -= 1
+        # 更新剩余飞船数目
+        score.prep_ships()
+        
         # 清空外星人和子弹列表
         aliens.empty()
         bullets.empty()
@@ -258,12 +263,12 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets,
     aliens.draw(screen)
     # 显示得分
     score.show_score()
-    
+
     #~ for alien in aliens.sprites():
         #~ alien.blitme()
     # 如果游戏处于非激活状态，就绘制play按钮    
     if not stats.game_active:
         play_button.draw_button()
-                    
+               
     # 让最近绘制的屏幕可见
     pygame.display.flip()    
