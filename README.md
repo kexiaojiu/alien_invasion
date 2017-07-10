@@ -32,6 +32,15 @@
   
 **scoreboard.py**
   文件包含Scoreboard类，用于统计得分。
+
+**data**
+  文件夹下high_score.txt保存玩家最高分。
+  
+**sound_effects**
+  文件夹包含游戏所需的音效文件。
+  
+**modues**
+  文件夹包含游戏运行之前需要安装的文件。
   
 ## 其他
-  需要安装python、Pygame(https://bitbucket.org/pygame/pygame/downloads/)
+  需要安装python（https://www.python.org/downloads/）、Pygame(https://bitbucket.org/pygame/pygame/downloads/)

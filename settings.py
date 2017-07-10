@@ -27,6 +27,11 @@ class Settings():
         # 外星人点数提高的速度
         self.score_scale = 1.5
         
+        # 音效位置设置
+        self.file_sound_shot = 'sound_effects\shot.wav'
+        self.file_sound_bomp = 'sound_effects\hit_bomp.wav'
+        self.file_sound_game_over = 'sound_effects\game_over.wav'
+        
         self.initialize_dynamic_settings()
         
         

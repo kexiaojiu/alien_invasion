@@ -128,6 +128,9 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, ship, aliens,
     
     # 每杀死一个外星人，加分
     if collisions:
+        # 添加击中外星人音效
+        play_sound_effect_bomp(ai_settings)
+        
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             score.prep_score()
@@ -146,10 +149,44 @@ def start_new_level(ai_settings, screen, stats, ship, aliens, bullets, score):
         score.prep_level()
         create_fleet(ai_settings, screen, ship, aliens)
         
+        
+def play_sound_effect_shot(ai_settings):
+    # 添加发射子弹的音效
+    file_sound_shot = ai_settings.file_sound_shot
+    try:
+        sound_effect_shot = pygame.mixer.Sound(file_sound_shot)
+        sound_effect_shot.play() 
+    except pygame.error:
+        print("The file " + file_sound_shot + " does not exist!")   
+
+
+def play_sound_effect_bomp(ai_settings):
+    # 添加击中外星人的音效
+    file_sound_bomp = ai_settings.file_sound_bomp
+    try:
+        sound_effect_bomp = pygame.mixer.Sound(file_sound_bomp)
+        sound_effect_bomp.play()
+    except pygame.error:
+        print("The file " + file_sound_bomp + " does not exist!")
+
+
+def play_sound_effect_game_over(ai_settings):
+    # 添加游戏结束的音效
+    file_sound_game_over = ai_settings.file_sound_game_over
+    try:
+        sound_effect_game_over = pygame.mixer.Sound(file_sound_game_over)
+        sound_effect_game_over.play() 
+    except pygame.error:
+        print("The file " + file_sound_game_over + " does not exist!")
     
+    
+                
 def fire_bullet(ai_settings, screen, ship, bullets):
     """如果没有超过子弹数上限，就发射一颗子弹"""
     if len(bullets) < ai_settings.bullets_allowed:
+        # 添加发射子弹的音效
+        play_sound_effect_shot(ai_settings)
+
         # 创建一个子弹，并将子弹加入到编组bullets中
         net_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(net_bullet)
@@ -235,7 +272,7 @@ def check_aliens_bottom(ai_settings, stats, score, screen, ship, aliens, bullets
 def ship_hit(ai_settings, stats, score, screen, ship, aliens, bullets):
     """相应外星人撞到飞船"""
     
-    if stats.ship_left > 0:
+    if stats.ship_left > 1:
         # 将ship_left减一
         stats.ship_left -= 1
         # 更新剩余飞船数目
@@ -248,14 +285,19 @@ def ship_hit(ai_settings, stats, score, screen, ship, aliens, bullets):
         create_fleet(ai_settings, screen, ship, aliens)
         ship.center_ship()
         # 暂停
-        sleep(1)
+        sleep(0.5)
     else:
+        # 添加游戏结束的音效
+        play_sound_effect_game_over(ai_settings)
         stats.game_active = False
         pygame.mouse.set_visible(True)
         sleep(0.5)
         # 清空外星人和子弹列表
         aliens.empty()
         bullets.empty()
+        # 剩余飞船数目置零
+        stats.ship_left = 0
+        
         # 创建一群外星人，并将飞船放在底部正中央
         create_fleet(ai_settings, screen, ship, aliens)
         ship.center_ship()
@@ -268,12 +310,14 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets,
     screen.fill(ai_settings.bg_color)
     # 在飞船和外星人后面重绘所有的子弹
     for bullet in bullets.sprites():
-        bullet.draw_bullet()        
+        bullet.draw_bullet()
+    # 显示飞船位置            
     ship.blitme()
     for alien in aliens:
         alien.blitme()
     aliens.draw(screen)
     # 显示得分
+    score.prep_ships()
     score.show_score()
 
     #~ for alien in aliens.sprites():
