@@ -43,4 +43,5 @@
   文件夹包含游戏运行之前需要安装的文件。
   
 ## 其他
-  需要安装python（https://www.python.org/downloads/）、Pygame(https://bitbucket.org/pygame/pygame/downloads/)
+  需要安装python（https://www.python.org/downloads/）、
+  Pygame(https://bitbucket.org/pygame/pygame/downloads/)
